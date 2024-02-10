@@ -1,4 +1,4 @@
-import express from "express";
+import express, { json } from "express";
 import mongo from "mongoose";
 import userRouter from "./route/user.route.js";
 import authRouter from "./route/auth.route.js"
@@ -21,3 +21,14 @@ app.listen(3000, () => {
 
 app.use("/api/user",userRouter)
 app.use("/api/auth",authRouter)/*auth.rote signup*/
+
+/*create a middleware and fuction to controol error*/
+app.use((err,req,res,next)=>{
+  const statusCode=err.statusCode || 500;
+  const message  =err.message || 'Internal Server Error'
+  return res.status(statusCode).json({
+    success:false,
+    statusCode,
+    message,
+  })
+})
