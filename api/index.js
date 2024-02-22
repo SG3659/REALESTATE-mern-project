@@ -1,7 +1,7 @@
 import express, { json } from "express";
 import mongo from "mongoose";
-import userRouter from "./route/user.route.js";
-import authRouter from "./route/auth.route.js";
+import userRouter from "./routes/user.route.js";
+import authRouter from "./routes/auth.route.js";
 mongo
   .connect(
     "mongodb+srv://sahil:gupta@real-estate.en9dyrm.mongodb.net/real-state?retryWrites=true&w=majority"

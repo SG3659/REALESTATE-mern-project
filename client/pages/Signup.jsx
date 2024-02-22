@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -19,7 +18,8 @@ const Signup = () => {
   //that handles form submission by sending a POST request to a server-side endpoint
   const submitHandler = async (event) => {
     event.preventDefault(); // to prevent reload page on submit
-    const response = await fetch('/api/auth/signup', {//request to the endpoint 
+    //request to the endpoint
+    const response = await fetch('/api/auth/signup', {
       method: "POST", //indicating that it intends to create a new resource on the server.
       header: {
         //to indicate that the request body contains JSON data
@@ -28,10 +28,10 @@ const Signup = () => {
       /* converts this JavaScript object into a JSON string*/
       body: JSON.stringify(formData),
     });
-    const data = await response.json();//covert response we get to json
+    const data = await response.json(); //covert response we get to json
     console.log(data);
   };
-  console.log(formData)
+  /*console.log(formData)*/
 
   return (
     <div className="p-3 max-w-lg mx-auto">
@@ -44,7 +44,6 @@ const Signup = () => {
           placeholder="Username"
           onChange={changeHandler}
           name="username"
-          
         />
         <input
           className="border  p-3 rounded-lg"
@@ -53,7 +52,6 @@ const Signup = () => {
           placeholder="Email"
           onChange={changeHandler}
           name="email"
-          
         />
         <input
           className="border  p-3 rounded-lg"
