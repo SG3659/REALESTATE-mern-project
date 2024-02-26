@@ -21,7 +21,7 @@ const Signup = () => {
     //request to the endpoint
     const response = await fetch('/api/auth/signup', {
       method: "POST", //indicating that it intends to create a new resource on the server.
-      header: {
+      headers: {
         //to indicate that the request body contains JSON data
         "content-Type": "application/json",
       },
