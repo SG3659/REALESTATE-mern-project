@@ -1,12 +1,16 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Signup = () => {
+  
   const [formData, setFormData] = useState({
     username: "",
     email: "",
     password: "",
   });
+  const [error, setError] = useState();
+  const [loading, setLoading] = useState(false);
+  const  navigate = useNavigate();
   // to store previous data
   function changeHandler(event) {
     setFormData({
@@ -18,20 +22,33 @@ const Signup = () => {
   //that handles form submission by sending a POST request to a server-side endpoint
   const submitHandler = async (event) => {
     event.preventDefault(); // to prevent reload page on submit
-    //request to the endpoint
-    const response = await fetch('/api/auth/signup', {
-      method: "POST", //indicating that it intends to create a new resource on the server.
-      headers: {
-        //to indicate that the request body contains JSON data
-        "content-Type": "application/json",
-      },
-      /* converts this JavaScript object into a JSON string*/
-      body: JSON.stringify(formData),
-    });
-    const data = await response.json(); //covert response we get to json
-    console.log(data);
+    try {
+      setLoading(true);
+      //request to the endpoint
+      const response = await fetch("/api/auth/signup", {
+        method: "POST", //indicating that it intends to create a new resource on the server.
+        headers: {
+          //to indicate that the request body contains JSON data
+          "content-Type": "application/json",
+        },
+        /* converts this JavaScript object into a JSON string*/
+        body: JSON.stringify(formData),
+      });
+      const data = await response.json(); //covert response we get to json
+      if (data.success === false) {
+        setLoading(false);
+        setError(data.message);
+        return;
+      }
+      setLoading(false);
+      setError(null);
+      /*console.log(formData)*/
+      navigate("/signin");
+    } catch (error) {
+      setLoading(false);
+      setError(error.message);
+    }
   };
-  /*console.log(formData)*/
 
   return (
     <div className="p-3 max-w-lg mx-auto">
@@ -39,7 +56,6 @@ const Signup = () => {
       <form onSubmit={submitHandler} className="flex flex-col gap-4">
         <input
           className="border  p-3 rounded-lg"
-          required
           type="text"
           placeholder="Username"
           onChange={changeHandler}
@@ -47,7 +63,6 @@ const Signup = () => {
         />
         <input
           className="border  p-3 rounded-lg"
-          required
           type="email"
           placeholder="Email"
           onChange={changeHandler}
@@ -55,7 +70,6 @@ const Signup = () => {
         />
         <input
           className="border  p-3 rounded-lg"
-          required
           type="password"
           placeholder="Password"
           onChange={changeHandler}
@@ -64,8 +78,9 @@ const Signup = () => {
         <button
           className="border  p-3 rounded-lg bg-slate-700 text-white hover:opacity-95
         disabled:opacity-80"
+          disabled={loading}
         >
-          Sign-Up
+          {loading ? "Loading..." : "Sign Up"}
         </button>
         <button
           className="border  p-3 rounded-lg bg-red-500 text-white hover:opacity-95
@@ -76,10 +91,11 @@ const Signup = () => {
       </form>
       <div className="mt-5 flex gap-2">
         <p>Have an account?</p>
-        <p className="text-blue-700">
-          <Link to="/signin">Sign in</Link>
-        </p>
+        <Link to="/signin">
+          <span className="text-blue-700">Sign in</span>
+        </Link>
       </div>
+      {error && <p className="text-red-500 mt-5">{error}</p>}
     </div>
   );
 };

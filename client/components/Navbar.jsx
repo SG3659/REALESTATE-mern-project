@@ -1,12 +1,7 @@
 import { Link } from "react-router-dom";
 import logo from "../assets/logo.svg";
 import { IoSearch } from "react-icons/io5";
-import { toast } from "react-hot-toast";
-
-const Navbar = (props) => {
-  let isLoggedIn = props.isLoggedIn;
-  let setIsLoggedIn = props.setIsLoggedIn;
-
+const Navbar = () => {
   return (
     <div className=" top-10 p-3 max-w-5xl mx-auto  flex justify-evenly items-center bg-[#E2E8F0]   rounded-3xl">
       <Link to="/">
@@ -31,33 +26,12 @@ const Navbar = (props) => {
             </li>
           </ul>
           <div className=" flex gap-4">
-            {!isLoggedIn && (
-              <Link to="/signin">
-                <button>Sign In</button>
-              </Link>
-            )}
-            {!isLoggedIn && (
-              <Link to="/signup">
-                <button>Sign Up</button>
-              </Link>
-            )}
-            {isLoggedIn && (
-              <Link to="/profile">
-                <button>Profile</button>
-              </Link>
-            )}
-            {isLoggedIn && (
-              <Link to="/">
-                <button
-                  onClick={() => {
-                    setIsLoggedIn(false);
-                    toast.success("Logged Out");
-                  }}
-                >
-                  Log Out
-                </button>
-              </Link>
-            )}
+            <Link to="/signin">
+              <button>Sign In</button>
+            </Link>
+            <Link to="/signup">
+              <button>Sign Up</button>
+            </Link>
           </div>
         </nav>
       </div>
