@@ -1,10 +1,13 @@
-import express, { json } from "express";
-import mongo from "mongoose";
+import express from "express";
+import mongoose from "mongoose";
+import dotenv from 'dotenv';
 import userRouter from "./routes/user.route.js";
 import authRouter from "./routes/auth.route.js";
-mongo
-  .connect(
+dotenv.config();
+mongoose
+  .connect(    
     "mongodb+srv://sahil:gupta@real-estate.en9dyrm.mongodb.net/real-state?retryWrites=true&w=majority"
+    //process.env.MONGO
   )
   .then(() => {
     console.log("connected to MongoDB");
@@ -20,6 +23,7 @@ app.listen(3000, () => {
 
 app.use("/api/user", userRouter);
 app.use("/api/auth", authRouter); /*auth.rote signup*/
+
 
 /*create a middleware and fuction to controol error*/
 app.use((err, req, res, next) => {
