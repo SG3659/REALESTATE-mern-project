@@ -7,11 +7,11 @@ const Navbar = () => {
       <Link to="/">
         <img src={logo} alt="logo" height={160} width={103} loading="lazy" />
       </Link>
-      <form className="bg-slate-100 rounded-lg  flex items-center p-2">
+      <form className="bg-slate-100 rounded-lg  flex items-center p-2 ">
         <input
           type="text"
           placeholder="Search..."
-          className="bg-transparent focus:outline-none w-28 sm:"
+          className="bg-transparent focus:outline-none w-28 "
         />
         <IoSearch />
       </form>
