@@ -1,16 +1,18 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
 const Signup = () => {
-  
   const [formData, setFormData] = useState({
     username: "",
     email: "",
     password: "",
   });
-  const [error, setError] = useState();
+  const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
-  const  navigate = useNavigate();
+  const [showpass, setShowpass] = useState(false);
+
+  const navigate = useNavigate();
   // to store previous data
   function changeHandler(event) {
     setFormData({
@@ -55,26 +57,38 @@ const Signup = () => {
       <h1 className="text-3xl text-center  font-semibold  my-7">Sign-Up</h1>
       <form onSubmit={submitHandler} className="flex flex-col gap-4">
         <input
-          className="border  p-3 rounded-lg"
+          className="border  p-3 rounded-lg focus:outline-none"
           type="text"
           placeholder="Username"
           onChange={changeHandler}
           name="username"
         />
         <input
-          className="border  p-3 rounded-lg"
+          className="border  p-3 rounded-lg focus:outline-none"
           type="email"
           placeholder="Email"
           onChange={changeHandler}
           name="email"
         />
-        <input
-          className="border  p-3 rounded-lg"
-          type="password"
-          placeholder="Password"
-          onChange={changeHandler}
-          name="password"
-        />
+        <label className="relative">
+          <input
+            className="border  p-3 rounded-lg w-full focus:outline-none"
+            type={showpass ? "text" : "password"}
+            placeholder="Password"
+            onChange={changeHandler}
+            name="password"
+          />
+          <span
+            className="absolute right-5 top-4 cursor-pointer "
+            onClick={() => setShowpass((prev) => !prev)}
+          >
+            {showpass ? (
+              <AiOutlineEyeInvisible fontSize={24} />
+            ) : (
+              <AiOutlineEye fontSize={24} />
+            )}
+          </span>
+        </label>
         <button
           className="border  p-3 rounded-lg bg-slate-700 text-white hover:opacity-95
         disabled:opacity-80"
